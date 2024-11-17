@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import SignUp from "~/components/signup";
+import SignUp from "~/components/auth/sign-up";
 import { authOptions } from "~/server/auth";
 
 const Page = async () => {

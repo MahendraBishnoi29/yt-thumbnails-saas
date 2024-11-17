@@ -64,6 +64,7 @@ model User {
     sessions      Session[]
     posts         Post[]
     password      String
+    credits       Int       @default(1)
 }
 
 model VerificationToken {

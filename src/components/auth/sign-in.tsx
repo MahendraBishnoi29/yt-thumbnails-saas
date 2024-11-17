@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
 import { signInSchema } from "~/schemas/auth";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -18,9 +18,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+} from "../ui/card";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type FormValues = z.infer<typeof signInSchema>;
 
