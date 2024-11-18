@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import RecentThumbnails from "~/components/recent-thumbnails";
 import TemplateImage from "~/components/template-image";
 import ThumbnailCreator from "~/components/thumbnail-creator";
 import { Button } from "~/components/ui/button";
@@ -19,6 +20,7 @@ const Page = async () => {
       credits: true,
     },
   });
+
   return (
     <div className="flex w-full max-w-full items-center justify-center px-4 md:max-w-3xl md:px-0">
       <div className="flex max-w-full flex-col gap-10">
@@ -46,10 +48,12 @@ const Page = async () => {
                 <Button>Buy Credits</Button>
               </Link>
             </div>
-            <div className="mt-8">Show recent thumbnails here</div>
+            <div className="mt-8">{/* <RecentThumbnails /> */}</div>
           </div>
         ) : (
-          <ThumbnailCreator />
+          <ThumbnailCreator>
+            <RecentThumbnails />
+          </ThumbnailCreator>
         )}
       </div>
     </div>

@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { domine, inter } from "~/app/fonts";
+import { getPresignedUrl } from "~/app/actions/aws";
 
 const presets = {
   style1: {
@@ -48,7 +49,7 @@ const presets = {
   },
 };
 
-const ThumbnailCreator = ({}) => {
+const ThumbnailCreator = ({ children }: { children: React.ReactNode }) => {
   const [text, setText] = useState("POV");
   const [selectedStyle, setSelectedStyle] = useState("style1");
   const [loading, setLoading] = useState<boolean>(false);
@@ -159,6 +160,28 @@ const ThumbnailCreator = ({}) => {
       link.download = "image/png";
       link.href = canvasRef?.current?.toDataURL();
       link.click();
+
+      canvasRef?.current.toBlob((blob) => {
+        if (blob) {
+          console.log("REF WALA FUNC CHALA", blob);
+          (async () => {
+            try {
+              const uploadUrl = await getPresignedUrl();
+              await fetch(uploadUrl, {
+                method: "PUT",
+                body: blob,
+                headers: {
+                  "Content-Type": "image/png",
+                },
+              });
+            } catch (error) {
+              console.log("ERROR UPLOADING FILE", error);
+            }
+          })().catch((error) => {
+            console.error("Unhandled error in async function:", error);
+          });
+        }
+      }, "image/png");
     }
   };
 
@@ -277,6 +300,7 @@ const ThumbnailCreator = ({}) => {
             />
           </div>
           <Dropzone setSelectedImage={setSelectedImage} />
+          <div className="mt-8">{children}</div>
         </div>
       )}
     </>
