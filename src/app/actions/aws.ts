@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
 import { format } from "date-fns";
 import { env } from "~/env";
+import { redirect } from "next/navigation";
 
 const s3 = new AWS.S3({
   accessKeyId: env.AWS_ACCESS_KEY,
@@ -31,4 +32,27 @@ export const getPresignedUrl = async () => {
 
   const uploadUrl = s3.getSignedUrl("putObject", params);
   return uploadUrl;
+};
+
+export const downloadS3File = async (url: string) => {
+  const serverSession = await getServerSession(authOptions);
+
+  if (!serverSession) {
+    throw new Error("Unauthorized");
+  }
+
+  const key = url.replace(
+    `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/`,
+    "",
+  );
+
+  const params = {
+    Bucket: env.AWS_BUCKET_NAME,
+    Key: key,
+    Expires: 3600,
+    ResponseContentDisposition: 'attachment; filename="thumbnail.png"',
+  };
+
+  const downloadUrl = s3.getSignedUrl("getObject", params);
+  redirect(downloadUrl);
 };

@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { authOptions } from "~/server/auth";
 import { env } from "~/env";
+import DownloadRecentThumbnail from "./download-recent-thumbnail";
 
 const RecentThumbnails = async () => {
   const serverSession = await getServerSession(authOptions);
@@ -60,9 +61,7 @@ const RecentThumbnails = async () => {
                 year: "numeric",
               })}
             </p>
-            <Button className="w-full" variant="outline">
-              Download
-            </Button>
+            <DownloadRecentThumbnail url={thumbnail.url} />
           </div>
         ))}
       </div>
