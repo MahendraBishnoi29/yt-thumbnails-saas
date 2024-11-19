@@ -1,7 +1,8 @@
 "use client";
 
-import { IoIosCheckmarkCircleOutline, IoMdArrowBack } from "react-icons/io";
-// import { redirectToBillingSession } from "~/app/actions/stripe";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { redirectToBillingSession } from "~/app/actions/stripe";
+
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -45,7 +46,7 @@ const PricingCard = ({
       <CardFooter>
         {priceId && (
           <Button
-            // onClick={() => redirectToBillingSession(priceId)}
+            onClick={async () => await redirectToBillingSession(priceId)}
             className="mt-6 w-full"
           >
             Buy now
