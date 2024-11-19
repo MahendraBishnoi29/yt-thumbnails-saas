@@ -8,9 +8,9 @@ import { env } from "~/env";
 import { redirect } from "next/navigation";
 
 const s3 = new AWS.S3({
-  accessKeyId: env.AWS_ACCESS_KEY,
-  secretAccessKey: env.AWS_SECRET_KEY,
-  region: env.AWS_REGION,
+  accessKeyId: env.MY_AWS_ACCESS_KEY,
+  secretAccessKey: env.MY_AWS_SECRET_KEY,
+  region: env.MY_AWS_REGION,
 });
 
 export const getPresignedUrl = async () => {
@@ -24,7 +24,7 @@ export const getPresignedUrl = async () => {
   const key = `${serverSession.user.id}/${timestamp}.png`;
 
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.MY_AWS_BUCKET_NAME,
     Key: key,
     Expires: 60,
     ContentType: "image/png",
@@ -42,12 +42,12 @@ export const downloadS3File = async (url: string) => {
   }
 
   const key = url.replace(
-    `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/`,
+    `https://${env.MY_AWS_BUCKET_NAME}.s3.${env.MY_AWS_REGION}.amazonaws.com/`,
     "",
   );
 
   const params = {
-    Bucket: env.AWS_BUCKET_NAME,
+    Bucket: env.MY_AWS_BUCKET_NAME,
     Key: key,
     Expires: 3600,
     ResponseContentDisposition: 'attachment; filename="thumbnail.png"',

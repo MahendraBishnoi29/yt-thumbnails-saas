@@ -17,12 +17,12 @@ const Page = async () => {
           <PricingCard
             priceId={env.STRIPE_10_PACK}
             pricing="$10"
-            credits="10"
+            credits="20"
           />
           <PricingCard
             priceId={env.STRIPE_25_PACK}
             pricing="$20"
-            credits="25"
+            credits="40"
           />
           <PricingCard
             priceId={env.STRIPE_100_PACK}

@@ -281,7 +281,7 @@ const ThumbnailCreator = ({ children }: { children: React.ReactNode }) => {
           </p>
           <div className="mt-10 flex flex-col items-center justify-between gap-10 md:flex-row md:items-start">
             <TemplateImage
-              image="/style1.png"
+              image="/white-style.png"
               selectStyle={() => {
                 setSelectedStyle("style1");
               }}

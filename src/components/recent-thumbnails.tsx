@@ -12,14 +12,14 @@ const RecentThumbnails = async () => {
   const serverSession = await getServerSession(authOptions);
 
   const s3 = new AWS.S3({
-    accessKeyId: env.AWS_ACCESS_KEY,
-    secretAccessKey: env.AWS_SECRET_KEY,
-    region: env.AWS_REGION,
+    accessKeyId: env.MY_AWS_ACCESS_KEY,
+    secretAccessKey: env.MY_AWS_SECRET_KEY,
+    region: env.MY_AWS_REGION,
   });
 
   const prefix = `${serverSession?.user.id}/`;
   const params = {
-    Bucket: env.AWS_BUCKET_NAME,
+    Bucket: env.MY_AWS_BUCKET_NAME,
     Prefix: prefix,
     MaxKeys: 10,
   };
@@ -31,7 +31,7 @@ const RecentThumbnails = async () => {
     const bTime = new Date(b.LastModified ?? 0).getTime();
     return bTime - aTime;
   }).map((item) => ({
-    url: `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${item.Key}`,
+    url: `https://${env.MY_AWS_BUCKET_NAME}.s3.${env.MY_AWS_REGION}.amazonaws.com/${item.Key}`,
     createdAt: item.LastModified,
   }));
 
